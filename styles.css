@@ -241,7 +241,7 @@ table.table .avatar {
     justify-content: space-around;
     flex-wrap: wrap;
 }
-	}
+	
 	tbody tr {
 		display: flex;
 		flex-direction: column;
