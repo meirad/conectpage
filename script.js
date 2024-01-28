@@ -1,5 +1,4 @@
 document.querySelector('.add').addEventListener('click', (event) => {
-    // Get form values
     let name = document.querySelector('.name-input').value;
     let email = document.querySelector('.email-input').value;
     let address = document.querySelector('.address-input').value;
@@ -23,13 +22,13 @@ document.querySelector('.add').addEventListener('click', (event) => {
 function displayEmployees() {
     let employees = JSON.parse(localStorage.getItem('employees')) || [];
     let tbody = document.querySelector('tbody');
-    tbody.innerHTML = ''; // Clear the table body
+    tbody.innerHTML = ''; 
 
     for (let employee of employees) {
         let tr = document.createElement('tr');
 
         for (let property in employee) {
-            if (property !== 'Actions') { // Exclude the 'Actions' property
+            if (property !== 'Actions') { 
                 let td = document.createElement('td');
                 td.textContent = employee[property];
                 tr.appendChild(td);
