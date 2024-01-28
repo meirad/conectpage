@@ -238,7 +238,9 @@ table.table .avatar {
 	}
 	thead tr {
 		display: flex;
-		justify-content: space-around;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
 	}
 	tbody tr {
 		display: flex;
@@ -265,4 +267,3 @@ table.table .avatar {
     .modal .modal-header, .modal .modal-body, .modal .modal-footer {
         padding: 10px 15px;
     }
-}

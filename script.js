@@ -4,11 +4,17 @@ document.querySelector('.add').addEventListener('click', (event) => {
     let address = document.querySelector('.address-input').value;
     let phone = document.querySelector('.phone-input').value;
 
-    if (!name || !email || !address || !phone) {
+    if (!name  || !address || !phone) {
         alert('Please fill out all required fields.');
         return;
     }
 
+    let emailRegex1 = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+
+if (!emailRegex1.test(email)) {
+    alert('Please enter a valid email address.');
+    return;
+}
     let employee = {
         name: name,
         email: email,
@@ -72,7 +78,6 @@ function displayEmployees() {
         });
 
         editButton.addEventListener('click', function() {
-            $('#editEmployeeModal').modal('hide');
             edit(employee);
         });
 
@@ -92,6 +97,7 @@ function deleteAll() {
         displayEmployees();
     }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     let deleteAllButton = document.querySelector('.delateAll');
     if (deleteAllButton) {
@@ -109,15 +115,13 @@ function edit(employee) {
     let employees = JSON.parse(localStorage.getItem('employees')) || [];
     let index = employees.findIndex(emp => emp.name === employee.name && emp.email === employee.email);
     if (index !== -1) {
-        // Get the save button
         let oldSaveButton = document.querySelector('#editEmployeeModal .save-button');
         if (oldSaveButton) {
-            // Clone the save button and replace the old save button with the clone
+
             let saveButton = oldSaveButton.cloneNode(true);
             oldSaveButton.parentNode.replaceChild(saveButton, oldSaveButton);
 
             saveButton.addEventListener('click', function() {
-                // Get new data from the editEmployeeModal
                 let newNameInput = document.querySelector('#editEmployeeModal .name-input');
                 let newEmailInput = document.querySelector('#editEmployeeModal .email-input');
                 let newAddressInput = document.querySelector('#editEmployeeModal .address-input');
@@ -128,6 +132,17 @@ function edit(employee) {
                     let newEmail = newEmailInput.value;
                     let newAddress = newAddressInput.value;
                     let newPhone = newPhoneInput.value;
+
+                    if (!newName || !newAddress || !newPhone) {
+                        alert('Please fill out all required fields.');
+                        return;
+                    }
+                    let emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+
+            if (!emailRegex.test(newEmail)) {
+            alert('Please enter a valid email address.');
+            return;
+            }
 
                     employees[index] = {
                         name: newName,
@@ -142,7 +157,9 @@ function edit(employee) {
                 } else {
                     console.error('One or more input elements not found');
                 }
+                $('#editEmployeeModal').modal('hide');
             });
+            
         }
     }
 }
