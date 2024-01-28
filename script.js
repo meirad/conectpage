@@ -1,6 +1,6 @@
 
 let emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-let numregex = /^\+[0-9]+$/;
+let numregex = /^\+?[0-9]+$/;
 
 document.querySelector('.add').addEventListener('click', (event) => {
     let name = document.querySelector('.name-input').value;
