@@ -4,6 +4,11 @@ document.querySelector('.add').addEventListener('click', (event) => {
     let address = document.querySelector('.address-input').value;
     let phone = document.querySelector('.phone-input').value;
 
+    if (!name || !email || !address || !phone) {
+        alert('Please fill out all required fields.');
+        return;
+    }
+
     let employee = {
         name: name,
         email: email,
@@ -16,6 +21,7 @@ document.querySelector('.add').addEventListener('click', (event) => {
     employees.push(employee);
     localStorage.setItem('employees', JSON.stringify(employees));
 
+    $('#addEmployeeModal').modal('hide');
     displayEmployees();
 });
 
@@ -33,6 +39,11 @@ function displayEmployees() {
                 td.textContent = employee[property];
                 tr.appendChild(td);
             }
+        }
+
+        let inputs = document.querySelectorAll('input[required]');
+        for (let input of inputs) {
+            input.value = '';
         }
 
         let deleteTd = document.createElement('td');
@@ -60,7 +71,8 @@ function displayEmployees() {
             displayEmployees();
         });
 
-        editButton.addEventListener('click', () => {
+        editButton.addEventListener('click', function() {
+            $('#editEmployeeModal').modal('hide');
             edit(employee);
         });
 
@@ -89,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
 let currentRow = null;
 
 function edit(employee) {
@@ -97,8 +110,12 @@ function edit(employee) {
     let index = employees.findIndex(emp => emp.name === employee.name && emp.email === employee.email);
     if (index !== -1) {
         // Get the save button
-        let saveButton = document.querySelector('#editEmployeeModal .save-button');
-        if (saveButton) {
+        let oldSaveButton = document.querySelector('#editEmployeeModal .save-button');
+        if (oldSaveButton) {
+            // Clone the save button and replace the old save button with the clone
+            let saveButton = oldSaveButton.cloneNode(true);
+            oldSaveButton.parentNode.replaceChild(saveButton, oldSaveButton);
+
             saveButton.addEventListener('click', function() {
                 // Get new data from the editEmployeeModal
                 let newNameInput = document.querySelector('#editEmployeeModal .name-input');

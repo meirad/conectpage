@@ -222,3 +222,47 @@ table.table .avatar {
 .modal form label {
 	font-weight: normal;
 }	
+
+@media (max-width: 900px) {
+    body {
+        font-size: 16px;
+    }
+    .table-wrapper {
+        min-width: 0;
+        box-shadow: none;
+    }
+	.col-sm-6 {
+		display: flex;
+		justify-content: center;
+		margin-top: 5px;
+	}
+	thead tr {
+		display: flex;
+		justify-content: space-around;
+	}
+	tbody tr {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+    .table-title {
+        padding: 10px 15px;
+        margin: 0;
+    }
+    .table-title h2 {
+        font-size: 20px;
+    }
+    .table-title .btn {
+        font-size: 12px;
+        min-width: 30px;
+    }
+    table.table tr th, table.table tr td {
+        padding: 8px 10px;
+    }
+    .modal .modal-dialog {
+        max-width: 90%;
+    }
+    .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+        padding: 10px 15px;
+    }
+}
