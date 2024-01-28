@@ -1,20 +1,31 @@
+
+let emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+let numregex = /^\+[0-9]+$/;
+
 document.querySelector('.add').addEventListener('click', (event) => {
     let name = document.querySelector('.name-input').value;
     let email = document.querySelector('.email-input').value;
     let address = document.querySelector('.address-input').value;
     let phone = document.querySelector('.phone-input').value;
 
-    if (!name  || !address || !phone) {
+    if (!name || !address || !phone || !email) {
         alert('Please fill out all required fields.');
+        event.preventDefault(); // Prevent form from submitting
         return;
     }
 
-    let emailRegex1 = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (!numregex.test(phone)) {
+        alert('Please enter a valid phone number.');
+        event.preventDefault(); // Prevent form from submitting
+        return;
+    }
 
-if (!emailRegex1.test(email)) {
-    alert('Please enter a valid email address.');
-    return;
-}
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        event.preventDefault(); // Prevent form from submitting
+        return;
+    }
+
     let employee = {
         name: name,
         email: email,
@@ -133,15 +144,22 @@ function edit(employee) {
                     let newAddress = newAddressInput.value;
                     let newPhone = newPhoneInput.value;
 
-                    if (!newName || !newAddress || !newPhone) {
+                    if (!newName || !newAddress || !newPhone ||  !newEmail) {
                         alert('Please fill out all required fields.');
+                        event.preventDefault(); // Prevent form from submitting
                         return;
                     }
-                    let emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+                    if (!numregex.test(newPhone)) {
+                        alert('Please enter a valid phone number.');
+                        event.preventDefault(); // Prevent form from submitting
+                        return;
+                        }
+
 
             if (!emailRegex.test(newEmail)) {
-            alert('Please enter a valid email address.');
-            return;
+                alert('Please enter a valid email address.');
+                event.preventDefault(); // Prevent form from submitting
+                return;
             }
 
                     employees[index] = {
