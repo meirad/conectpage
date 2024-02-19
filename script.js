@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let currentRow = null;
 
 function edit(employee) {
-    console.log(employee);
+    console.log(employee.name);
     let employees = JSON.parse(localStorage.getItem('employees')) || [];
     let index = employees.findIndex(emp => emp.name === employee.name && emp.email === employee.email);
     if (index !== -1) {
@@ -132,49 +132,55 @@ function edit(employee) {
             let saveButton = oldSaveButton.cloneNode(true);
             oldSaveButton.parentNode.replaceChild(saveButton, oldSaveButton);
 
-            saveButton.addEventListener('click', function() {
-                let newNameInput = document.querySelector('#editEmployeeModal .name-input');
-                let newEmailInput = document.querySelector('#editEmployeeModal .email-input');
-                let newAddressInput = document.querySelector('#editEmployeeModal .address-input');
-                let newPhoneInput = document.querySelector('#editEmployeeModal .phone-input');
-
-                if (newNameInput && newEmailInput && newAddressInput && newPhoneInput) {
-                    let newName = newNameInput.value;
-                    let newEmail = newEmailInput.value;
-                    let newAddress = newAddressInput.value;
-                    let newPhone = newPhoneInput.value;
-
-                    if (!newName || !newAddress || !newPhone ||  !newEmail) {
-                        alert('Please fill out all required fields.');
-                        event.preventDefault(); // Prevent form from submitting
-                        return;
-                    }
-                    if (!numregex.test(newPhone)) {
-                        alert('Please enter a valid phone number.');
-                        event.preventDefault(); // Prevent form from submitting
-                        return;
-                        }
+            let newNameInput = document.querySelector('#editEmployeeModal .name-input');
+            let newEmailInput = document.querySelector('#editEmployeeModal .email-input');
+            let newAddressInput = document.querySelector('#editEmployeeModal .address-input');
+            let newPhoneInput = document.querySelector('#editEmployeeModal .phone-input');
 
 
-            if (!emailRegex.test(newEmail)) {
-                alert('Please enter a valid email address.');
-                event.preventDefault(); // Prevent form from submitting
-                return;
+            if (newNameInput && newEmailInput && newAddressInput && newPhoneInput) {
+                newNameInput.value = employee.name; 
+                newEmailInput.value = employee.email; 
+                newAddressInput.value = employee.address; 
+                newPhoneInput.value = employee.phone; 
+                
             }
-
-                    employees[index] = {
-                        name: newName,
-                        email: newEmail,
-                        address: newAddress,
-                        phone: newPhone,
-                        Actions: ''
-                    };
-
-                    localStorage.setItem('employees', JSON.stringify(employees));
-                    displayEmployees();
-                } else {
-                    console.error('One or more input elements not found');
+            saveButton.addEventListener('click', function(event) {
+                // Retrieve the updated values from the input fields
+                let newName = newNameInput.value;
+                let newEmail = newEmailInput.value;
+                let newAddress = newAddressInput.value;
+                let newPhone = newPhoneInput.value;
+            
+                if (!newName || !newAddress || !newPhone || !newEmail) {
+                    alert('Please fill out all required fields.');
+                    event.preventDefault(); 
+                    return;
                 }
+            
+                if (!numregex.test(newPhone)) {
+                    alert('Please enter a valid phone number.');
+                    event.preventDefault(); 
+                    return;
+                }
+            
+                if (!emailRegex.test(newEmail)) {
+                    alert('Please enter a valid email address.');
+                    event.preventDefault(); 
+                    return;
+                }
+            
+                employees[index] = {
+                    name: newName,
+                    email: newEmail,
+                    address: newAddress,
+                    phone: newPhone,
+                    Actions: ''
+                };
+            
+                localStorage.setItem('employees', JSON.stringify(employees));
+                displayEmployees();
+            
                 $('#editEmployeeModal').modal('hide');
             });
             
